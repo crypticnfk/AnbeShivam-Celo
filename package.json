@@ -1,0 +1,20 @@
+{
+  "name": "anbe-shivam",
+  "version": "1.0.0",
+  "description": "A decentralized investment platform",
+  "author": "team-nft-1",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.3.1",
+    "@truffle/hdwallet-provider": "^1.4.0",
+    "fs": "0.0.1-security"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
