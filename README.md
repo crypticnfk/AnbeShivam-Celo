@@ -1,21 +1,21 @@
 
 # AnbeShivam
 
-A decentralized and completely transparent project funding platform which allows only accredited investors to access the platform content
+A decentralized and completely transparent project funding platform.
 
 
 ## Tech Stack Used
 
 - Truffle Suite
 - Next js
-- ganache
+- Celo contractkit
 - IPFS
-- openzeppelin
+- Openzeppelin contracts
 - react-bootstrap
 
 ## AnbeShivam Smart Contract Deployments
 
-**Mumbai**
+**Alfajores**
 
 | Contract | Deployed address  |
 | :----- | :- |
@@ -121,7 +121,7 @@ Contributions are what makes the open source community such an amazing place to 
 
 - [@abhigamez](https://github.com/abhinav-TB)
 - [@crypticnfk](https://github.com/crypticnfk)
-- [Navneeth Ranjith](https://github.com/Navneeth87)
+- [@Navneeth87](https://github.com/Navneeth87)
 - [@HishamHR5](https://github.com/HishamHR5)
 - [@aZrael936](https://github.com/aZrael936)
 
