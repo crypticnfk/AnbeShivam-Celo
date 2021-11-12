@@ -12,11 +12,10 @@ import {
 import {
     loadWeb3,
     loadBlockchainData,
-    getProjectNames,
+    getProjects,
     returnContent,
-    checkInvestor,
     investFunds,
-    fetchLatestPrice
+    getGODSBalance
 } from '../utils/web3-utils';
 import ProjectModal from '../components/modal';
 
@@ -29,7 +28,6 @@ function Projects() {
     const [projects, setProjects] = useState([]);
     const [modalShow, setModalShow] = useState(false);
     const [chosenProject, chooseProject] = useState(null);
-    const [maticusd, setMaticusd] = useState(0);
 
     useEffect(async () => {
         if (web3) {
@@ -37,13 +35,8 @@ function Projects() {
             await loadWeb3();
             const isConnected = await loadBlockchainData();
             setConnected(isConnected);
-            const projectNames = await getProjectNames();
-            setProjects(projectNames);
-            const isInvestor = await checkInvestor();
-            if (!isInvestor) {
-                window.location.href = "/";
-            }
-            setMaticusd(await fetchLatestPrice());
+            const projects = await getProjects();
+            setProjects(projects);
             setLoading(false);
         }
     }, [web3]);
@@ -52,21 +45,32 @@ function Projects() {
         event.preventDefault();
 
         setLoading(true);
-        returnContent(event.target.value)
-            .then(result => {
-                if (result) {
-                    chooseProject(result);
-                    setModalShow(true);
-                }
-            })
+        chooseProject(projects[event.target.value]);
+        setModalShow(true);
         setLoading(false);
     }
 
     const investInProject = async (amount) => {
-        const metadata = {
-            name: "AnbeShivam Investor - Project " + chosenProject.name,
-            description: "Certificate of Investment in project " + chosenProject.name + " on the AnbeShivam Protocol",
-            image: "https://bafybeicwosh52j2xv7iyzp4azsvh6ejrih6y4lctb55fqtmhloihws4pba.ipfs.infura-ipfs.io/"
+        const GODSbalance = await getGODSBalance();
+        let metadata;
+        if (GODSbalance > 100) {
+            const metadata = {
+                name: "AnbeShivam Gold Investor",
+                description: "Certificate of Investment in project " + chosenProject.name + " on the AnbeShivam Protocol",
+                image: "https://bafybeicwosh52j2xv7iyzp4azsvh6ejrih6y4lctb55fqtmhloihws4pba.ipfs.infura-ipfs.io/"
+            }
+        } else if (GODSbalance > 10) {
+            const metadata = {
+                name: "AnbeShivam Silver Investor",
+                description: "Certificate of Investment in project " + chosenProject.name + " on the AnbeShivam Protocol",
+                image: "https://bafybeicwosh52j2xv7iyzp4azsvh6ejrih6y4lctb55fqtmhloihws4pba.ipfs.infura-ipfs.io/"
+            }
+        } else {
+            const metadata = {
+                name: "AnbeShivam Bronze Investor",
+                description: "Certificate of Investment in project " + chosenProject.name + " on the AnbeShivam Protocol",
+                image: "https://bafybeicwosh52j2xv7iyzp4azsvh6ejrih6y4lctb55fqtmhloihws4pba.ipfs.infura-ipfs.io/"
+            }
         }
         const metadataString = JSON.stringify(metadata);
         setLoading(true);
@@ -110,7 +114,8 @@ function Projects() {
                                     <center>
                                     <Card style={{ width: '30rem' }}>
                                         <Card.Header>
-                                            <h3>{project}</h3>
+                                            <h3>{project.name}</h3>
+                                            <h4>Votes Received: {project.votes.toString()}</h4>
                                         </Card.Header>
                                         <Card.Body>
                                             <Button id={key} value={key} variant="primary" onClick={getProject}>View Project Pitch</Button>
@@ -122,7 +127,6 @@ function Projects() {
                             ))}
                             <ProjectModal
                                 show={modalShow}
-                                maticusd={maticusd}
                                 project={chosenProject}
                                 investInProject={(amount) => investInProject(amount)}
                                 onHide={() => setModalShow(false)}

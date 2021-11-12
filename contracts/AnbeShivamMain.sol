@@ -10,9 +10,6 @@ contract AnbeShivamMain is Ownable {
     address NFTContract;
     uint totalWeight;
 
-    uint public fundingPool;
-    uint public matchingPool;
-
     struct Content {
         uint id;
         uint receivedFunds;
@@ -26,6 +23,8 @@ contract AnbeShivamMain is Ownable {
     }
 
     Content[] public contents;
+    uint public fundingPool;
+    uint public matchingPool;
 
     event newContentAdded(uint, string, string);
     event projectFunded(uint, uint, address);
@@ -113,6 +112,7 @@ contract AnbeShivamMain is Ownable {
         contents[_contentID].receivedFunds = 0;
         contents[_contentID].matchedFunds = 0;
         contents[_contentID].isListed = false;
+        matchingPool -= contents[_contentID].matchedFunds;
         contents[_contentID].creator.transfer(totalFunds);
     }
 }

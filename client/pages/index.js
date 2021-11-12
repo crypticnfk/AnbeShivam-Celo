@@ -6,8 +6,8 @@ import {
 import { Context } from '../context/state';
 import { 
   loadWeb3, 
-  loadBlockchainData, 
-  checkInvestor
+  loadBlockchainData,
+  getFundingPools
 } from '../utils/web3-utils';
 import { AtomSpinner } from 'react-epic-spinners';
 import styles from '../styles/Home.module.css';
@@ -21,24 +21,24 @@ function Home() {
       await loadWeb3();
       const isConnected = await loadBlockchainData();
       setConnected(isConnected);
+      const pools = await getFundingPools();
+      setFundingPool(pools[0]);
+      setMatchingPool(pools[1]);
       setLoading(false);
     }
   },[web3]);
 
   const [connected, setConnected] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fundingPool, setFundingPool] = useState(0);
+  const [matchingPool, setMatchingPool] = useState(0);
 
   const checkUser = async() => {
     if(!connected) {
-      window.alert("Please connect your wallet first and use Polygon or Mumbai Network");
+      window.alert("Please connect your wallet first and use Celo Alfajores Network");
     } else {
-      const isInvestor = await checkInvestor();
-      if(isInvestor) {
-        window.alert("Welcome to AnbeShivam");
-        window.location.href = "/projects";
-      } else {
-        window.alert("Sorry, You do not meet the requirements to access the platform");
-      }
+      window.alert("Welcome to AnbeShivam");
+      window.location.href = "/projects";
     }
   }
 

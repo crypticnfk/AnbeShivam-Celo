@@ -92,12 +92,14 @@ export const getTokenURI = async(tokenId) => {
   return uri;
 };
 
-export const getProjectNames = async() => {
+export const getProjects = async() => {
   let projects = [];
   const pCount = await AnbeShivam.methods.returnContentCount().call();
   for(var i = 0; i < pCount; ++i) {
-    const project = await AnbeShivam.methods.projects(i).call();
-    projects.push(project);
+    const project = await AnbeShivam.methods.contents(i).call();
+    if(project.isListed) {
+      projects.push(project);
+    }
   }
   return projects;
 }
@@ -119,32 +121,6 @@ export const addContent = async(projectName, fileURL) => {
       window.alert("Error occured: ", error);
     });
 };
-
-export const returnContent = async(projectId) => {
-  const account = await getAccountAddress();
-  let result = false;
-  await AnbeShivam.methods
-    .returnContent(projectId)
-    .send({
-      from: account
-    })
-    .on("transactionHash", function (hash) {})
-    .on("receipt", async function (receipt) {
-      result = await receipt.events.viewedContent.returnValues[0];
-    })
-    .on("confirmation", (confirmationNumber, receipt) => {})
-    .on("error", (error, receipt) => {
-      window.alert("Error occured while accessing content");
-      result = false;
-    });
-
-    return result;
-};
-
-/*export const returnProjectCount = async() => {
-  const projectCount = await AnbeShivam.methods.returnContentCount().call();
-  return projectCount;
-};*/
 
 export const investFunds = async(contentId, metadata, amount) => {
   const account = await getAccountAddress();
@@ -175,4 +151,10 @@ export const getNFTs = async() => {
     }
   }
   return nfts;
+}
+
+export const getFundingPools = async () => {
+  const cPool = await asMain.methods.fundingPool().call();
+  const mPool = await asMain.methods.matchingPool().call();
+  return [web3.utils.fromWei(cPool), web3.utils.fromWei(mPool)];
 }
