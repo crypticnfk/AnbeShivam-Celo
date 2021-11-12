@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract AnbeShivamMain is Ownable {
     address GODSContract;
     address NFTContract;
+    uint totalWeight;
 
     uint public fundingPool;
     uint public matchingPool;
@@ -43,20 +44,10 @@ contract AnbeShivamMain is Ownable {
         }
     }
 
-    function square(uint x) internal pure returns (uint z) {
-        z = x*x;
-    } 
-
-    function syncMatchedFunds() internal {
-        uint totalWeight = square(contents[0].weight);
-        /*for(uint i=0; i < contents.length; ++i) {
-            if(contents[i].isListed) {
-                totalWeight += square(contents[i].weight) - contents[i].receivedFunds;
-            }
-        }*/
+    function syncMatchedFunds() external onlyOwner {
         for(uint i=0; i < contents.length; ++i) {
             if(contents[i].isListed) {
-                contents[i].matchedFunds = (square(contents[i].weight) - contents[i].receivedFunds)*matchingPool/totalWeight;
+                contents[i].matchedFunds = contents[i].weight*matchingPool/totalWeight;
             }
         }
     } 
@@ -79,8 +70,7 @@ contract AnbeShivamMain is Ownable {
     function increaseMatchingPool() external payable onlyOwner {
         require(msg.value > 0);
         matchingPool += msg.value;
-        emit setMatchingPool(msg.value);
-        syncMatchedFunds();
+        emit setMatchingPool(matchingPool);
     }
 
     function addContent(string memory _name, string memory _fileURL) external payable {
@@ -103,16 +93,17 @@ contract AnbeShivamMain is Ownable {
     }
 
     function investFunds(uint _contentID, string memory _metadata) external payable {
-        require(msg.value >= 1 ether, "Invalid amount");
-        require(msg.sender != contents[_contentID].creator, "Creator cannot vote");
-        contents[_contentID].receivedFunds += msg.value;
+        require(msg.value >= 1 ether);
+        require(msg.sender != contents[_contentID].creator);
         contents[_contentID].votes += 1;
-        contents[_contentID].weight += sqrt(msg.value);
+        totalWeight -= contents[_contentID].weight;
+        contents[_contentID].receivedFunds += msg.value;
+        contents[_contentID].weight = (sqrt(contents[_contentID].weight + contents[_contentID].receivedFunds) + sqrt(msg.value))**2 - contents[_contentID].receivedFunds;
         fundingPool += msg.value;
+        totalWeight += contents[_contentID].weight;
         AnbeShivamInvestorToken(GODSContract).mint(msg.sender, msg.value);
         AnbeShivamNFT(NFTContract).safeMint(msg.sender, _metadata);
         emit projectFunded(_contentID, msg.value, msg.sender);
-        syncMatchedFunds();
     }
 
     function withdrawFunds(uint _contentID) external {

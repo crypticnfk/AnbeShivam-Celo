@@ -52,6 +52,8 @@ contract('AnbeShivamMain', (accounts) => {
         let initialInvestorBalance, initialEthBalance, initialGODSBalance, initialVotes;
 
         before(async () => {
+            await asMain.addContent("demo", "sampleurl", {from: accounts[1], value: web3.utils.toWei("2", "ether")});
+            await asMain.addContent("demo2", "sampleurl", {from: accounts[2], value: web3.utils.toWei("2", "ether")});
             const content = await asMain.contents(0);
             initialEthBalance = content.receivedFunds;
             initialInvestorBalance = await web3.eth.getBalance(accounts[1]);
@@ -68,6 +70,7 @@ contract('AnbeShivamMain', (accounts) => {
         });
 
         it("investor can invest funds", async() => {
+            await asMain.investFunds(2, sampleURI, {from: accounts[5], value: web3.utils.toWei("6", "ether")});
             const finalInvestorBalance = await web3.eth.getBalance(accounts[1]);       
             let difference = parseFloat(
                 web3.utils.fromWei((initialInvestorBalance - finalInvestorBalance).toString())
@@ -87,7 +90,7 @@ contract('AnbeShivamMain', (accounts) => {
             assert.equal(web3.utils.fromWei((finalGODSBalance - initialGODSBalance).toString()), "1");
 
             const newSupply = await asiToken.totalSupply();
-            assert.equal(web3.utils.fromWei(newSupply).toString(), "1");
+            assert.equal(web3.utils.fromWei(newSupply).toString(), "7");
         });
 
         it("investor receives NFT", async()=> {
@@ -97,10 +100,12 @@ contract('AnbeShivamMain', (accounts) => {
     });
 
     describe("Matching fund pool", async () => {
-        let initialPoolAmount;
+        let initialPoolAmount, initialMatchedFunds;
 
         before(async () => {
             initialPoolAmount = await asMain.matchingPool();
+            const content = await asMain.contents(0);
+            initialMatchedFunds = content.matchedFunds;
             await asMain.investFunds(0, sampleURI, {from: accounts[2], value: web3.utils.toWei("6", "ether")});
         });
 
@@ -115,8 +120,16 @@ contract('AnbeShivamMain', (accounts) => {
             assert.equal(difference, 10);
         });
 
-        xit("syncs matched funds", async () => {
-                    
+        it("deployer can sync matched funds", async () => {
+            await asMain.syncMatchedFunds();
+            const content = await asMain.contents(0);
+            finalMatchedFunds = content.matchedFunds;
+
+            const difference = parseFloat(
+                web3.utils.fromWei((finalMatchedFunds - initialMatchedFunds).toString())
+            );
+
+            assert.isAbove(difference, 5.76);
         });
     });
 
