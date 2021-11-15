@@ -154,7 +154,22 @@ export const getNFTs = async() => {
 }
 
 export const getFundingPools = async () => {
-  const cPool = await asMain.methods.fundingPool().call();
-  const mPool = await asMain.methods.matchingPool().call();
+  const cPool = await AnbeShivam.methods.fundingPool().call();
+  const mPool = await AnbeShivam.methods.matchingPool().call();
   return [web3.utils.fromWei(cPool), web3.utils.fromWei(mPool)];
+}
+
+export const withdrawFunds = async (contentId) => {
+  const account = await getAccountAddress();
+  await AnbeShivam.methods
+    .withdrawFunds(contentId)
+    .send({ from: account })
+    .on("transactionHash", function (hash) {})
+    .on("receipt", function (receipt) {})
+    .on("confirmation", (confirmationNumber, receipt) => {
+      window.alert("Successfully withdrew Funds");
+    })
+    .on("error", (error, receipt) => {
+      window.alert("Error occured: ", error);
+    });
 }

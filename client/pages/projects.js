@@ -13,8 +13,9 @@ import {
     loadWeb3,
     loadBlockchainData,
     getProjects,
-    returnContent,
+    getAccountAddress,
     investFunds,
+    withdrawFunds,
     getGODSBalance
 } from '../utils/web3-utils';
 import ProjectModal from '../components/modal';
@@ -25,6 +26,7 @@ function Projects() {
     const [web3, setweb3] = useContext(Context);
     const [connected, setConnected] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [account, setAccount] = useState("Not Connected");
     const [projects, setProjects] = useState([]);
     const [modalShow, setModalShow] = useState(false);
     const [chosenProject, chooseProject] = useState(null);
@@ -35,11 +37,15 @@ function Projects() {
             await loadWeb3();
             const isConnected = await loadBlockchainData();
             setConnected(isConnected);
-            const projects = await getProjects();
-            setProjects(projects);
+            if(isConnected) {
+                const account = await getAccountAddress();
+                setAccount(account);
+                const projects = await getProjects();
+                setProjects(projects);
+            }
             setLoading(false);
         }
-    }, [web3]);
+    }, [web3, account]);
 
     const getProject = async (event) => {
         event.preventDefault();
@@ -50,23 +56,31 @@ function Projects() {
         setLoading(false);
     }
 
+    const withdraw = async (event) => {
+        event.preventDefault();
+
+        setLoading(true);
+        await withdrawFunds(event.target.value);
+        setLoading(false);
+    }
+
     const investInProject = async (amount) => {
         const GODSbalance = await getGODSBalance();
         let metadata;
         if (GODSbalance > 100) {
-            const metadata = {
+            metadata = {
                 name: "AnbeShivam Gold Investor",
                 description: "Certificate of Investment in project " + chosenProject.name + " on the AnbeShivam Protocol",
                 image: "https://bafybeicwosh52j2xv7iyzp4azsvh6ejrih6y4lctb55fqtmhloihws4pba.ipfs.infura-ipfs.io/"
             }
         } else if (GODSbalance > 10) {
-            const metadata = {
+            metadata = {
                 name: "AnbeShivam Silver Investor",
                 description: "Certificate of Investment in project " + chosenProject.name + " on the AnbeShivam Protocol",
                 image: "https://bafybeicwosh52j2xv7iyzp4azsvh6ejrih6y4lctb55fqtmhloihws4pba.ipfs.infura-ipfs.io/"
             }
         } else {
-            const metadata = {
+            metadata = {
                 name: "AnbeShivam Bronze Investor",
                 description: "Certificate of Investment in project " + chosenProject.name + " on the AnbeShivam Protocol",
                 image: "https://bafybeicwosh52j2xv7iyzp4azsvh6ejrih6y4lctb55fqtmhloihws4pba.ipfs.infura-ipfs.io/"
@@ -119,6 +133,10 @@ function Projects() {
                                         </Card.Header>
                                         <Card.Body>
                                             <Button id={key} value={key} variant="primary" onClick={getProject}>View Project Pitch</Button>
+                                            <br/><br/>
+                                            {project.creator.toUpperCase() === account.toUpperCase() &&
+                                            <Button id={key} value={key} variant="primary" onClick={withdraw}>Withdraw Projects Funds</Button>
+                                            }
                                         </Card.Body>
                                     </Card>
                                     </center>

@@ -52,6 +52,7 @@ function AddContent() {
             updateUrl(pathUrl);
             await addContent(inputs.name, pathUrl);
             window.alert("Project added successfully");
+            window.location.href="/projects";
         } catch (error) {
             console.log('Error uploading file: ', error);
         }

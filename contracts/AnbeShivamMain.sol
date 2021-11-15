@@ -110,9 +110,9 @@ contract AnbeShivamMain is Ownable {
         require(msg.sender == contents[_contentID].creator, "Not creator");
         uint totalFunds = contents[_contentID].receivedFunds + contents[_contentID].matchedFunds + 2 ether;
         contents[_contentID].receivedFunds = 0;
+        matchingPool -= contents[_contentID].matchedFunds;
         contents[_contentID].matchedFunds = 0;
         contents[_contentID].isListed = false;
-        matchingPool -= contents[_contentID].matchedFunds;
         contents[_contentID].creator.transfer(totalFunds);
     }
 }

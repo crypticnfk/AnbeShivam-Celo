@@ -21,10 +21,12 @@ function Home() {
       await loadWeb3();
       const isConnected = await loadBlockchainData();
       setConnected(isConnected);
-      const pools = await getFundingPools();
-      setFundingPool(pools[0]);
-      setMatchingPool(pools[1]);
-      setLoading(false);
+      if(isConnected) {
+        const pools = await getFundingPools();
+        setFundingPool(pools[0]);
+        setMatchingPool(pools[1]);
+        setLoading(false);
+      }
     }
   },[web3]);
 
@@ -61,6 +63,8 @@ function Home() {
         <div className="w3-row-padding w3-padding-64 w3-container">
           <div className="w3-content">
             <div className="w3-twothird">
+              <p>{parseFloat(fundingPool).toFixed(2)} CELO</p>
+              <p>{parseFloat(matchingPool).toFixed(2)} CELO</p>
               <h1>Overview</h1>
               <h5 className="w3-padding-32">AnbeShivam works as a decentralized and completely transparent project funding platform which allows only accredited investors to access the platform content</h5>
               <br/>
