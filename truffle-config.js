@@ -1,13 +1,13 @@
 const fs = require('fs');
-const Kit = require('@celo/contractkit')
-const kit = Kit.newKit('https://alfajores-forno.celo-testnet.org')
-const getAccount = require('./getAccount').getAccount
+const Kit = require('@celo/contractkit');
+const kit = Kit.newKit('https://alfajores-forno.celo-testnet.org');
+const getAccount = require('./getAccount').getAccount;
 
 async function awaitWrapper() {
-  let account = await getAccount()
-  kit.connection.addAccount(account.privateKey)
+  let account = await getAccount();
+  kit.connection.addAccount(account.privateKey);
 }
-awaitWrapper() 
+awaitWrapper();
 
 module.exports = {
   networks: {

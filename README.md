@@ -7,21 +7,21 @@ A decentralized and completely transparent project funding platform.
 ## Tech Stack Used
 
 - Truffle Suite
-- Next js
-- Celo contractkit
+- Celo ContractKit
 - IPFS
 - Openzeppelin contracts
+- Next js
 - react-bootstrap
 
 ## AnbeShivam Smart Contract Deployments
 
-**Alfajores**
+**Alfajores Testnet**
 
 | Contract | Deployed address  |
 | :----- | :- |
-| [AnbeShivamMain Contract](https://mumbai.polygonscan.com/address/0x6C5452e7822c82af4ee38041f4749EdaBfaa2F79) | `0x6C5452e7822c82af4ee38041f4749EdaBfaa2F79` |
-| [GODS Token Contract](https://mumbai.polygonscan.com/token/0xFfFcC7aFa25fC131e54c4E194eC9D97eAA1C62d9) | `0xFfFcC7aFa25fC131e54c4E194eC9D97eAA1C62d9`|
-| [AnbeShivam NFT Contract](https://mumbai.polygonscan.com/token/0x28a3a80bF1A53653f85150cBB0BA2A3E3cb817Fc) | `0x28a3a80bF1A53653f85150cBB0BA2A3E3cb817Fc`|
+| [AnbeShivamMain Contract](https://alfajores-blockscout.celo-testnet.org/address/0x6A17D1b1E31A8473Fccf21b7FAB82757139520f1) | `0x6A17D1b1E31A8473Fccf21b7FAB82757139520f1` |
+| [GODS Token Contract](https://alfajores-blockscout.celo-testnet.org/address/0x56BFF24b2e1B4bf865df01826A6aC0c60a0082af) | `0x56BFF24b2e1B4bf865df01826A6aC0c60a0082af`|
+| [AnbeShivam NFT Contract](https://alfajores-blockscout.celo-testnet.org/address/0x27163f2Df1d3B1B34FB946d84F7CC0b5E527671d) | `0x27163f2Df1d3B1B34FB946d84F7CC0b5E527671d`|
 
 
 
