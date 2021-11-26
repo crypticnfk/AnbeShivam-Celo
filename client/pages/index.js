@@ -129,7 +129,7 @@ function Home() {
               vote for their prefered projects by donating an amount of minimum 2 CELO. On pledging or sending funds towards a project, 
               the investor receives an equivalent amount of $GODS tokens and an AnbeShivam NFT in return.
               <br/><br/>
-              <img src='http://www.chainlinkresearch.com/thebrief/2017_brief/May_articles/bronze-silver-gold.jpg' alt="AnbeShivam Investor Tiers" width="500" height="200" />
+              <img src='https://www.toptierawards.com/wp-content/uploads/2017/01/GoldSilverBronze.gif' alt="AnbeShivam Investor Tiers" width="500" height="200" />
               <br/><br/>
               The NFT also acts an investor badge, signifying their involvment as an investor on the AnbeShivam protocol. It also denotes 
               the tier of the Investor, the various tiers being Gold, Silver and Bronze which is determined on the basis of the amount 
