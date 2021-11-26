@@ -24,7 +24,7 @@ function ProjectModal(props) {
                 <center>
                 <br/>
                 <p style={{fontSize: 20, color: "crimson"}}>Funds Received: {(props.project.receivedFunds / 10**18).toFixed(2)} CELO</p>
-                <p style={{fontSize: 20, color: "crimson"}}>Funds Matched: {(props.project.matchedFunds / 10**18).toFixed(2)} CELO</p>
+                <p style={{fontSize: 20, color: "cornflowerblue"}}>Funds Matched: {(props.project.matchedFunds / 10**18).toFixed(2)} CELO</p>
                 <Modal.Body>
                 <h4>Project Pitch</h4>
                 <img style={{ alignSelf: 'center' }} alt="Not Available" src={props.project.fileURL} height="400" width="600" />
