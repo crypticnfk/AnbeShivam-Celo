@@ -64,6 +64,9 @@ export const getAccountAddress = async() => {
 };
 
 export const getNetwork = async() => {
+  window.ethereum.on('chainChanged', () => {
+    window.location.reload()
+  })
   const networkId = await web3.eth.net.getId();  
   if(networkId == 42220) {
     return "Celo";

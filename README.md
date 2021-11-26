@@ -1,8 +1,7 @@
 
 # AnbeShivam
 
-A decentralized and completely transparent project funding platform.
-
+A decentralized and completely transparent quadratic funding platform.
 
 ## Tech Stack Used
 
@@ -37,13 +36,13 @@ A decentralized and completely transparent project funding platform.
 Clone the project
 
 ```bash
-  git clone git@github.com:crypticnfk/AnbeShivam.git
+  git clone git@github.com:crypticnfk/AnbeShivam-Celo.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd AnbeShivam
+  cd AnbeShivam-Celo
 
 ```
 
@@ -58,7 +57,7 @@ Install dependencies
 Compile Smart Contracts
 
 ```bash
-  truffel Compile
+  truffel compile
 ```
 
 Run ganache (a local block chain)
@@ -76,7 +75,7 @@ Run migrations to deploy the smart contracts to ganache
 
 ### Setting up the client
  
-Go to the client directory
+Go to the /client directory
 
 ```bash
   cd client

@@ -69,21 +69,21 @@ function Projects() {
         let metadata;
         if (GODSbalance > 100) {
             metadata = {
-                name: "AnbeShivam Gold Investor",
-                description: "Certificate of Investment in project " + chosenProject.name + " on the AnbeShivam Protocol",
-                image: "https://bafybeicwosh52j2xv7iyzp4azsvh6ejrih6y4lctb55fqtmhloihws4pba.ipfs.infura-ipfs.io/"
+                name: "AnbeShivam Gold NFT",
+                description: "Certified AnbeShivam Investor - Gold Tier",
+                image: "https://bafybeigkcsmj26lsn7vh4dwfadzz4wotswpfmno6ng3x7gury7ohsb7azq.ipfs.infura-ipfs.io/"
             }
         } else if (GODSbalance > 10) {
             metadata = {
-                name: "AnbeShivam Silver Investor",
-                description: "Certificate of Investment in project " + chosenProject.name + " on the AnbeShivam Protocol",
-                image: "https://bafybeicwosh52j2xv7iyzp4azsvh6ejrih6y4lctb55fqtmhloihws4pba.ipfs.infura-ipfs.io/"
+                name: "AnbeShivam Silver NFT",
+                description: "Certified AnbeShivam Investor - Silver Tier",
+                image: "https://bafybeihkihzrr5zkwbpoyrs3miw32pvlo4pemvsyfoilbmdt5ionstidpi.ipfs.infura-ipfs.io/"
             }
         } else {
             metadata = {
-                name: "AnbeShivam Bronze Investor",
-                description: "Certificate of Investment in project " + chosenProject.name + " on the AnbeShivam Protocol",
-                image: "https://bafybeicwosh52j2xv7iyzp4azsvh6ejrih6y4lctb55fqtmhloihws4pba.ipfs.infura-ipfs.io/"
+                name: "AnbeShivam Bronze NFT",
+                description: "Certified AnbeShivam Investor - Bronze Tier",
+                image: "https://bafybeicbgjxx2ncfhe5u275u4s7hhfs6xiw775hgscbmboryg6qs7f6biq.ipfs.infura-ipfs.io/"
             }
         }
         const metadataString = JSON.stringify(metadata);
